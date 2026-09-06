@@ -2,42 +2,44 @@
 #include "Game/Enemy/KameckBeam.hpp"
 #include "Game/Enemy/KameckFireBall.hpp"
 #include "Game/Enemy/KameckTurtle.hpp"
-#include "Game/LiveActor/LiveActorGroup.hpp"
 #include "Game/Scene/SceneObjHolder.hpp"
 
-KameckBeamHolder::KameckBeamHolder() : DeriveActorGroup< KameckBeam >("カメックビーム管理", 0x10) {
-    for (s32 i = 0; i < 0x10; i++) {
-        KameckBeam* b = new KameckBeam("カメックビーム");
-        b->initWithoutIter();
-        registerActor(b);
+namespace {
+    static const s32 sMaxKameckBeam = 16;
+    static const s32 sMaxKameckFireBall = 16;
+    static const s32 sMaxKameckBeamTurtle = 16;
+};  // namespace
+
+KameckBeamHolder::KameckBeamHolder() : DeriveActorGroup< KameckBeam >("カメックビーム管理", ::sMaxKameckBeam) {
+    KameckBeam* kameckBeam;
+
+    for (s32 i = 0; i < ::sMaxKameckBeam; i++) {
+        kameckBeam = new KameckBeam("カメックビーム");
+        kameckBeam->initWithoutIter();
+        registerActor(kameckBeam);
     }
 }
 
-KameckBeamHolder::~KameckBeamHolder() {
-}
+KameckFireBallHolder::KameckFireBallHolder() : DeriveActorGroup< KameckFireBall >("カメック火の玉管理", ::sMaxKameckFireBall) {
+    KameckFireBall* kameckFireBall;
 
-KameckFireBallHolder::KameckFireBallHolder() : DeriveActorGroup< KameckFireBall >("カメック火の玉管理", 0x10) {
-    for (s32 i = 0; i < 0x10; i++) {
-        KameckFireBall* b = new KameckFireBall("カメックビーム用炎");
-        b->initWithoutIter();
-        b->makeActorDead();
-        registerActor(b);
+    for (s32 i = 0; i < ::sMaxKameckFireBall; i++) {
+        kameckFireBall = new KameckFireBall("カメックビーム用炎");
+        kameckFireBall->initWithoutIter();
+        kameckFireBall->makeActorDead();
+        registerActor(kameckFireBall);
     }
 }
 
-KameckBeamTurtleHolder::KameckBeamTurtleHolder() : DeriveActorGroup< KameckTurtle >("カメックビーム用カメ管理", 0x10) {
-    for (s32 i = 0; i < 0x10; i++) {
-        KameckTurtle* turtle = new KameckTurtle("カメックビーム用カメ");
-        turtle->initWithoutIter();
-        turtle->makeActorDead();
-        registerActor(turtle);
+KameckBeamTurtleHolder::KameckBeamTurtleHolder() : DeriveActorGroup< KameckTurtle >("カメックビーム用カメ管理", ::sMaxKameckBeamTurtle) {
+    KameckTurtle* kameckTurtle;
+
+    for (s32 i = 0; i < ::sMaxKameckBeamTurtle; i++) {
+        kameckTurtle = new KameckTurtle("カメックビーム用カメ");
+        kameckTurtle->initWithoutIter();
+        kameckTurtle->makeActorDead();
+        registerActor(kameckTurtle);
     }
-}
-
-KameckFireBallHolder::~KameckFireBallHolder() {
-}
-
-KameckBeamTurtleHolder::~KameckBeamTurtleHolder() {
 }
 
 namespace MR {
@@ -53,33 +55,50 @@ namespace MR {
         MR::createSceneObj(SceneObj_KameckBeamTurtleHolder);
     }
 
-    // MR::startFollowKameckBeam
+    KameckBeam* startFollowKameckBeam(s32 beamKind, MtxPtr pMtx, f32 scale, const TVec3f& rWandLocalPos, KameckBeamEventListener* pEventListener) {
+        KameckBeam* kameckBeam = getKameckBeam();
+
+        if (kameckBeam == nullptr) {
+            return nullptr;
+        }
+
+        kameckBeam->setBeamKind(beamKind);
+
+        if (!kameckBeam->requestFollowWand(pMtx, scale)) {
+            return nullptr;
+        }
+
+        kameckBeam->setWandLocalPosition(rWandLocalPos);
+        kameckBeam->setEventListener(pEventListener);
+
+        return kameckBeam;
+    }
 
     KameckBeam* getKameckBeam() {
-        KameckBeamHolder* beam = MR::getSceneObj< KameckBeamHolder >(SceneObj_KameckBeamHolder);
+        KameckBeamHolder* kameckBeamHolder = MR::getSceneObj< KameckBeamHolder >(SceneObj_KameckBeamHolder);
 
-        if (beam->getDeadActor()) {
-            return static_cast< KameckBeam* >(beam->getDeadActor());
+        if (kameckBeamHolder->getDeadActor()) {
+            return static_cast< KameckBeam* >(kameckBeamHolder->getDeadActor());
         }
 
         return nullptr;
     }
 
     KameckFireBall* getKameckFireBall() {
-        KameckFireBallHolder* fire = MR::getSceneObj< KameckFireBallHolder >(SceneObj_KameckFireBallHolder);
+        KameckFireBallHolder* kameckFireBallHolder = MR::getSceneObj< KameckFireBallHolder >(SceneObj_KameckFireBallHolder);
 
-        if (fire->getDeadActor()) {
-            return static_cast< KameckFireBall* >(fire->getDeadActor());
+        if (kameckFireBallHolder->getDeadActor()) {
+            return static_cast< KameckFireBall* >(kameckFireBallHolder->getDeadActor());
         }
 
         return nullptr;
     }
 
     KameckTurtle* getKameckBeamTurtle() {
-        KameckBeamTurtleHolder* t = MR::getSceneObj< KameckBeamTurtleHolder >(SceneObj_KameckBeamTurtleHolder);
+        KameckBeamTurtleHolder* kameckBeamTurtleHolder = MR::getSceneObj< KameckBeamTurtleHolder >(SceneObj_KameckBeamTurtleHolder);
 
-        if (t->getDeadActor()) {
-            return static_cast< KameckTurtle* >(t->getDeadActor());
+        if (kameckBeamTurtleHolder->getDeadActor()) {
+            return static_cast< KameckTurtle* >(kameckBeamTurtleHolder->getDeadActor());
         }
 
         return nullptr;

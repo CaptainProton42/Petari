@@ -22,7 +22,7 @@ void MovementOnOffGroupHolder::onMovementGroup(const char* pName) {
     NameObjGroup* group = findGroupFromName(pName);
 
     for (int i = 0; i < group->mObjectCount; i++) {
-        MR::requestMovementOn(group->mObjects[i]);
+        MR::requestMovementOn(group->getObj(i));
     }
 }
 
@@ -39,7 +39,7 @@ NameObjGroup* MovementOnOffGroupHolder::createGroup(const char* pName, u32 numMa
 
 NameObjGroup* MovementOnOffGroupHolder::findGroupFromName(const char* pName) const {
     for (u32 i = 0; i < mGroups.size(); i++) {
-        if (MR::isEqualString(mGroups[i]->mName, pName)) {
+        if (MR::isEqualString(mGroups[i]->getName(), pName)) {
             return mGroups[i];
         }
     }

@@ -23,9 +23,8 @@ void BigFanHolder::calcWindInfo(TVec3f* pWindInfo, const TVec3f& rPos, f32* pWin
     for (int i = 0; i < count; i++) {
         TVec3f windVec;
         windVec.zero();
-        BigFan* fan = static_cast< BigFan* >(getActor(i));
-        fan->calcWindInfo(&windVec, rPos);
-        f32 speed = static_cast< BigFan* >(getActor(i))->mWindSpeed;
+        getMember(i)->calcWindInfo(&windVec, rPos);
+        f32 speed = getMember(i)->mWindSpeed;
         stack_2C.add(windVec * (speed / 100.0f));
     }
 

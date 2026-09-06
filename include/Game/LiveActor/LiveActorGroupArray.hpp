@@ -9,8 +9,6 @@ class MsgSharedGroup : public LiveActorGroup {
 public:
     MsgSharedGroup(const char*, s32, const JMapInfoIter&);
 
-    virtual ~MsgSharedGroup();
-
     virtual void init(const JMapInfoIter&) override;
     virtual void movement() override;
 
@@ -27,14 +25,12 @@ class LiveActorGroupArray : public NameObj {
 public:
     LiveActorGroupArray(const char* pName);
 
-    virtual ~LiveActorGroupArray();
-
     virtual void init(const JMapInfoIter&);
 
     LiveActorGroup* getLiveActorGroup(const LiveActor*) const;
     MsgSharedGroup* createGroup(const JMapInfoIter&, const char*, s32);
     LiveActorGroup* findGroup(const LiveActor*) const;
-    LiveActorGroup* findGroup(const JMapInfoIter&);
+    LiveActorGroup* findGroup(const JMapInfoIter&) const;
     LiveActorGroup* entry(LiveActor*, const JMapInfoIter&, const char*, s32);
 
     MsgSharedGroup* mGroups[0x20];  // 0xC

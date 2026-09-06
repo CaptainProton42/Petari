@@ -1,37 +1,40 @@
 #include "Game/NameObj/MovementOnOffGroupHolder.hpp"
+#include "Game/NameObj/NameObjGroup.hpp"
 #include "Game/Util/ObjUtil.hpp"
 #include "Game/Util/StringUtil.hpp"
 
 MovementOnOffGroupHolder::MovementOnOffGroupHolder(const char* pName) : NameObj(pName), mGroups() {
 }
 
-NameObjGroup* MovementOnOffGroupHolder::joinToGroup(const char* pName, NameObj* pobj, u32 a3) {
-    NameObjGroup* pGroup = findGroupFromName(pName);
+NameObjGroup* MovementOnOffGroupHolder::joinToGroup(const char* pName, NameObj* pObj, u32 numMax) {
+    NameObjGroup* group = findGroupFromName(pName);
 
-    if (pGroup == nullptr) {
-        pGroup = createGroup(pName, a3);
+    if (group == nullptr) {
+        group = createGroup(pName, numMax);
     }
 
-    pGroup->registerObj(pobj);
+    group->registerObj(pObj);
 
-    return pGroup;
+    return group;
 }
 
-void MovementOnOffGroupHolder::onMovementGroup(const char* pGroupName) {
-    NameObjGroup* pGroup = findGroupFromName(pGroupName);
+void MovementOnOffGroupHolder::onMovementGroup(const char* pName) {
+    NameObjGroup* group = findGroupFromName(pName);
 
-    for (int i = 0; i < pGroup->mObjectCount; i++) {
-        MR::requestMovementOn(pGroup->mObjects[i]);
+    for (int i = 0; i < group->mObjectCount; i++) {
+        MR::requestMovementOn(group->mObjects[i]);
     }
 }
 
-NameObjGroup* MovementOnOffGroupHolder::createGroup(const char* pGroupName, u32 count) {
-    NameObjGroup* pGroup = new NameObjGroup(pGroupName, count);
-    pGroup->initWithoutIter();
+NameObjGroup* MovementOnOffGroupHolder::createGroup(const char* pName, u32 numMax) {
+    NameObjGroup* group;
 
-    mGroups.push_back(pGroup);
+    group = new NameObjGroup(pName, numMax);
+    group->initWithoutIter();
 
-    return pGroup;
+    mGroups.push_back(group);
+
+    return group;
 }
 
 NameObjGroup* MovementOnOffGroupHolder::findGroupFromName(const char* pName) const {
@@ -42,7 +45,4 @@ NameObjGroup* MovementOnOffGroupHolder::findGroupFromName(const char* pName) con
     }
 
     return nullptr;
-}
-
-MovementOnOffGroupHolder::~MovementOnOffGroupHolder() {
 }

@@ -1,6 +1,7 @@
 Petari
-[![Build Status]][actions] ![RMGJ01_Code]![RMGJ01_Link] ![RMGE01_Code]![RMGE01_Link] ![RMGP01_Code]![RMGP01_Link] ![RMGK01_Code]![RMGK01_Link] [![Discord Badge]][discord]
-=============
+[![Build Status]][actions] [![Discord Badge]][discord]
+======
+![RMGJ01_Code]![RMGJ01_Link] ![RMGE01_Code]![RMGE01_Link] ![RMGP01_Code]![RMGP01_Link] ![RMGK01_Code]![RMGK01_Link]
 
 [Build Status]: https://github.com/SMGCommunity/Petari/actions/workflows/build.yml/badge.svg
 [actions]: https://github.com/SMGCommunity/Petari/actions/workflows/build.yml
@@ -41,19 +42,13 @@ Below are our AI usage guidelines:
 > [!NOTE]
 > AI may be used for code cleanup, formatting, documentation, and naming assistance. AI-generated decompilation work is not allowed. Pull requests containing obvious AI-generated decompilation output or other AI slop will be rejected. Contributors should be able to explain and justify any decompilation work they submit. This also applies to all tool-generated code. We want to keep this project as human as possible.
 
-Supported versions:
-
-- `RMGJ01` (Japan)
-- `RMGE01` (North America)
-- `RMGK01` (Korea)
-
 Dependencies
 ============
 
 Windows
---------
+-------
 
-On Windows, it's **highly recommended** to use native tooling. WSL or msys2 are **not** required.  
+On Windows, it is **highly recommended** to use native tooling. WSL or msys2 are **not** required.  
 When running under WSL, [objdiff](#diffing) is unable to get filesystem notifications for automatic rebuilds.
 
 - Install [Python](https://www.python.org/downloads/) and add it to `%PATH%`.
@@ -62,7 +57,7 @@ When running under WSL, [objdiff](#diffing) is unable to get filesystem notifica
   - Quick install via pip: `pip install ninja`
 
 macOS
-------
+-----
 
 - Install [ninja](https://github.com/ninja-build/ninja/releases):
 
@@ -73,7 +68,7 @@ macOS
 [wibo](https://github.com/decompals/wibo), a minimal 32-bit Windows binary wrapper, will be automatically downloaded and used.
 
 Linux
-------
+-----
 
 - Install [ninja](https://github.com/ninja-build/ninja/releases).
 
@@ -88,7 +83,7 @@ Building
   git clone https://github.com/SMGCommunity/Petari.git
   ```
 
-- Using [Dolphin Emulator](https://dolphin-emu.org/), extract your game to `orig/RMGK01`.
+- Using [Dolphin Emulator](https://dolphin-emu.org/), extract your desired region of the game to `orig/RMGX01/`, where `X` is the region code.
 ![](assets/dolphin-extract.png)
   - To save space, the only necessary files are the following. Any others can be deleted.
     - `sys/main.dol`

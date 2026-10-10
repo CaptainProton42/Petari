@@ -1,5 +1,5 @@
 Petari
-[![Build Status]][actions] ![RMGJ01_Code]![RMGJ01_Link] ![RMGE01_Code]![RMGE01_Link] ![RMGK01_Code]![RMGK01_Link] [![Discord Badge]][discord]
+[![Build Status]][actions] ![RMGJ01_Code]![RMGJ01_Link] ![RMGE01_Code]![RMGE01_Link] ![RMGP01_Code]![RMGP01_Link] ![RMGK01_Code]![RMGK01_Link] [![Discord Badge]][discord]
 =============
 
 [Build Status]: https://github.com/SMGCommunity/Petari/actions/workflows/build.yml/badge.svg
@@ -9,6 +9,8 @@ Petari
 [RMGJ01_Link]: https://decomp.dev/SMGCommunity/Petari/RMGJ01.svg?mode=shield&measure=complete_code_percent&label=
 [RMGE01_Code]: https://decomp.dev/SMGCommunity/Petari/RMGE01.svg?mode=shield&measure=code&label=RMGE01
 [RMGE01_Link]: https://decomp.dev/SMGCommunity/Petari/RMGE01.svg?mode=shield&measure=complete_code_percent&label=
+[RMGP01_Code]: https://decomp.dev/SMGCommunity/Petari/RMGP01.svg?mode=shield&measure=code&label=RMGP01
+[RMGP01_Link]: https://decomp.dev/SMGCommunity/Petari/RMGP01.svg?mode=shield&measure=complete_code_percent&label=
 [RMGK01_Code]: https://decomp.dev/SMGCommunity/Petari/RMGK01.svg?mode=shield&measure=code&label=RMGK01
 [RMGK01_Link]: https://decomp.dev/SMGCommunity/Petari/RMGK01.svg?mode=shield&measure=complete_code_percent&label=
 

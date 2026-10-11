@@ -60,13 +60,13 @@ namespace {
         return value < 0 ? 0 : value > 255 ? 255 : value;
     }
 
-#if (VERSION == RMGJ01 || VERSION == RMGE01 || VERSION == RMGP01)
-    const GXColor& getTextColor(s32 index) {
-        return ::sTextColor[index];
-    }
-#else
+#if (VERSION == RMGK01)
     const GXColor& getTextColor(s32 index) NO_INLINE {
         return MR::getLanguage() == LANGUAGE_KRKOREAN ? ::sTextColorKorean[index] : ::sTextColor[index];
+    }
+#else
+    const GXColor& getTextColor(s32 index) {
+        return ::sTextColor[index];
     }
 #endif
 
@@ -162,16 +162,16 @@ namespace nw4r {
     namespace ut {
         template <>
         f32 TextWriterBase< wchar_t >::PrintImpl(StreamType str, int length) {
-#if (VERSION == RMGJ01 || VERSION == RMGE01)
-            NW4R_POINTER_ASSERT_AT(271, this);
-            NW4R_POINTER_ASSERT_AT(272, str);
-            NW4R_POINTER_ASSERT_AT(273, GetFont());
-            NW4R_MIN_ASSERT_AT(274, length, 0);
-#else
+#if (VERSION == RMGK01)
             NW4R_POINTER_ASSERT_AT(308, this);
             NW4R_POINTER_ASSERT_AT(309, str);
             NW4R_POINTER_ASSERT_AT(310, GetFont());
             NW4R_MIN_ASSERT_AT(311, length, 0);
+#else
+            NW4R_POINTER_ASSERT_AT(271, this);
+            NW4R_POINTER_ASSERT_AT(272, str);
+            NW4R_POINTER_ASSERT_AT(273, GetFont());
+            NW4R_MIN_ASSERT_AT(274, length, 0);
 #endif
 
             f32 xOrigin = GetCursorX();
@@ -230,10 +230,10 @@ namespace nw4r {
                     operation = mTagProcessor->Process(code, &context);
 
                     if (operation == TagProcessor::OPERATION_NEXT_LINE) {
-#if (VERSION == RMGJ01 || VERSION == RMGE01)
-                        NW4R_POINTER_ASSERT_AT(341, context.str);
-#else
+#if (VERSION == RMGK01)
                         NW4R_POINTER_ASSERT_AT(378, context.str);
+#else
+                        NW4R_POINTER_ASSERT_AT(341, context.str);
 #endif
 
                         if (IsDrawFlagSet(HORIZONTAL_ALIGN_MASK, HORIZONTAL_ALIGN_CENTER)) {
@@ -265,10 +265,10 @@ namespace nw4r {
                         break;
                     }
 
-#if (VERSION == RMGJ01 || VERSION == RMGE01)
-                    NW4R_POINTER_ASSERT_AT(386, context.str);
-#else
+#if (VERSION == RMGK01)
                     NW4R_POINTER_ASSERT_AT(423, context.str);
+#else
+                    NW4R_POINTER_ASSERT_AT(386, context.str);
 #endif
                     reader.Set(context.str);
                 } else
@@ -358,10 +358,10 @@ CustomTagProcessor::CustomTagProcessor(nw4r::lyt::TextBox* textBox)
     mIsText = false;
     mIsInfo = false;
 
-#if (VERSION == RMGJ01 || VERSION == RMGE01 || VERSION == RMGP01)
-    mNoCharSpace = true;
-#else
+#if (VERSION == RMGK01)
     mNoCharSpace = false;
+#else
+    mNoCharSpace = true;
 #endif
 
     mTextBox = textBox;
@@ -560,10 +560,10 @@ CustomTagProcessor::Operation CustomTagProcessor::exePictureGroup(nw4r::ut::Rect
             }
         }
 
-#if (VERSION == RMGJ01 || VERSION == RMGE01 || VERSION == RMGP01)
-        writer.MoveCursorY(-writer.GetFontAscent());
-#else
+#if (VERSION == RMGK01)
         writer.MoveCursorY(mPictureFontOffset + -writer.GetFontAscent());
+#else
+        writer.MoveCursorY(-writer.GetFontAscent());
 #endif
 
         writer.Print(&picture, 1);
@@ -576,7 +576,7 @@ CustomTagProcessor::Operation CustomTagProcessor::exePictureGroup(nw4r::ut::Rect
 }
 
 CustomTagProcessor::Operation CustomTagProcessor::exeFontSizeGroup(nw4r::ut::Rect* rect, const MessageEditorMessageTag& tag, ContextType* context) {
-#if (VERSION == RMGJ01 || VERSION == RMGE01 || VERSION == RMGP01)
+#if (VERSION != RMGK01)
     if (rect != nullptr) {
         return OPERATION_NO_CHAR_SPACE;
     }
